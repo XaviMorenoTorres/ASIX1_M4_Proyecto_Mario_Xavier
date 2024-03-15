@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mario Kart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <h2>¿Sabrás resolverlo?</h2>
+    <div id="tablero">
+    </div>
+
+    <br>
+
+    <div class="nuevo-juego" onclick="generarTablero()">Reiniciar</div><br>
+    <form id="continuarForm" action="../paginas/pantalla3.php" style="display:none;">
+        <input class="nuevo-juego" type="submit" value="Continuar">
+    </form>
+
+    <script>
+
+        let iconos = []
+        let selecciones = []
+
+        generarTablero()
+
+        function cargarIconos() {
+            iconos = [
+                '<img src="img/luigi.png" width="50%">',
+                '<img src="img/bowser.png" width="50%">',
+                '<img src="img/kingkong.png" width="50%">',
+                '<img src="img/didi.png" width="50%">',
+                '<img src="img/mario.png" width="50%">',
+                '<img src="img/toad.png" width="50%">',
+                '<img src="img/wario.png" width="50%">',
+                '<img src="img/yossi.png" width="50%">',
+                '<img src="img/waluigi.webp" width="50%">',
+                '<img src="img/peach.png" width="50%">',
+                '<img src="img/shyguy.png" width="50%">',
+                '<img src="img/daisy.png" width="50%">',
+            ]
+        }
+
+        function generarTablero() {
+            cargarIconos()
+            let len = iconos.length
+            selecciones = []
+            let tablero = document.getElementById("tablero")
+            let tarjetas = []
+            
+            for (let i = 0; i < len*2; i++) {
+                tarjetas.push(`
+                <div class="area-tarjeta" onclick="seleccionarTarjeta(${i})">
+                    <div class="tarjeta" id="tarjeta${i}">
+                        <div class="cara trasera" id="trasera${i}">
+                            ${iconos[0]}
+                        </div>
+                        <div class="cara superior">
+                            <i class="far fa-question-circle"></i>
+                        </div>
+                    </div>
+                </div>        
+                `)
+                if (i % 2 == 1) {
+                    iconos.splice(0, 1)
+                }
+            }
+            tarjetas.sort(() => Math.random() - 0.5)
+            tablero.innerHTML = tarjetas.join(" ")
+        }
+
+        function seleccionarTarjeta(i) {
+            let tarjeta = document.getElementById("tarjeta" + i)
+            if (tarjeta.style.transform != "rotateY(180deg)") {
+                tarjeta.style.transform = "rotateY(180deg)"
+                selecciones.push(i)
+            }
+            if (selecciones.length == 2) {
+                deseleccionar(selecciones)
+                selecciones = []
+            }
+            checkCompletion()
+        }
+
+        function deseleccionar(selecciones) {
+            setTimeout(() => {
+                let trasera1 = document.getElementById("trasera" + selecciones[0])
+                let trasera2 = document.getElementById("trasera" + selecciones[1])
+                if (trasera1.innerHTML != trasera2.innerHTML) {
+                    let tarjeta1 = document.getElementById("tarjeta" + selecciones[0])
+                    let tarjeta2 = document.getElementById("tarjeta" + selecciones[1])
+                    tarjeta1.style.transform = "rotateY(0deg)"
+                    tarjeta2.style.transform = "rotateY(0deg)"
+                }else{
+                    trasera1.style.background = "plum"
+                    trasera2.style.background = "plum"
+                    checkCompletion()
+                }
+            }, 1000);
+        }
+
+        function checkCompletion() {
+            let todasPlum = true;
+            document.querySelectorAll('.cara.trasera').forEach(function(tarjeta) {
+                if (tarjeta.style.background !== 'plum') {
+                    todasPlum = false;
+                }
+            });
+            if (todasPlum) {
+                document.getElementById('continuarForm').style.display = 'block';
+            } else {
+                document.getElementById('continuarForm').style.display = 'none';
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

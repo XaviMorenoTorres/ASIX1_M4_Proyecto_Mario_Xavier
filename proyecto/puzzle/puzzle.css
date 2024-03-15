@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    color: #ffffff;
+    background-color: #bf3131;
+    font-family: "Press Start 2P", system-ui;
+    font-size: 15px;
+}
+h1 {
+    font-size: 1.5rem;
+}
+h3 {
+    font-size: 1rem;
+}
+#title {
+    height: 150px;
+    width: 400px;
+}
+
+#board {
+    width: 360px;
+    height: 360px;
+    background-color: rgb(206, 94, 94);
+    border: 10px solid #000000;
+
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#board img {
+    width: 118px;
+    height: 118px;
+    border: 1px solid #650000;
+}
+input {
+    width: 30%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+input[type="submit"] {
+    background-color: #000000;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+}
+
+input[type="submit"]:hover {
+    background-color: #430000;
+}
+
+@media screen and (max-width: 700px){
+    label {
+        font-size: 0.5rem;
+    }
+    h1 {
+        font-size: 0.8rem;
+    }
+    h3 {
+        font-size: 0.7rem;
+    }
+    input[type="submit"] {
+        width: 20%;
+        font-size: 0.6rem;
+    }
+    #title {
+        width: 250px;
+    }
+    }
